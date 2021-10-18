@@ -1,17 +1,35 @@
 var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'plaebak-1',
-});
+var config = {
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
 
-connection.connect();
+var sqlConnection = function sqlConnection(sql, values, next) {
+  // It means that the values hasnt been passed
+  if (arguments.length === 2) {
+    next = values;
+    values = null;
+  }
 
-connection.query('SELECT 1 + 1 AS solution', function (err, rows, fields) {
-  if (err) throw err;
+  var connection = mysql.createConnection(config);
+  connection.connect(function (err) {
+    if (err !== null) {
+      console.log('[MYSQL] Error connecting to mysql:' + err + '\n');
+    }
+  });
 
-  console.log('The solution is: ', rows[0].solution);
-});
+  connection.query(sql, values, function (err) {
+    connection.end(); // close the connection
 
-connection.end();
+    if (err) {
+      throw err;
+    }
+
+    // Execute the callback
+    next.apply(this, arguments);
+  });
+};
+
+module.exports = sqlConnection;
