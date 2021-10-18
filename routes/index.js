@@ -9,9 +9,10 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', upload.single('upload'), function (req, res, next) {
-  console.log('req.body', req.body);
+  const fileMeta = JSON.parse(req.body['upload-meta']);
+
   console.log('req.file', req.file);
-  res.json({ message: 'Hello from the backend.' });
+  res.json({ message: 'Hello from the backend.', fileMeta });
 });
 
 module.exports = router;
