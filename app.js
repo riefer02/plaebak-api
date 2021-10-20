@@ -5,6 +5,8 @@ var logger = require('morgan');
 const cors = require('cors');
 const db = require('./db/index');
 
+// Stop working so hard for the man and work on your own project.
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
