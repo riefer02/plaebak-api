@@ -18,9 +18,11 @@ var sqlConnection = function sqlConnection(sql, values, next) {
     if (err !== null) {
       console.log('[MYSQL] Error connecting to mysql:' + err + '\n');
     }
+    console.log('connected as id ' + connection.threadId);
   });
 
-  connection.query(sql, values, function (err) {
+  connection.query(sql, values, function (err, results) {
+    console.log('Results:', results);
     connection.end(); // close the connection
 
     if (err) {
