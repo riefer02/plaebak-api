@@ -10,7 +10,7 @@ var AWS = require('aws-sdk');
 // Set the Region
 AWS.config.update({ region: 'us-east-2' });
 
-console.log(AWS.config);
+// console.log(AWS.config);
 // Don't burn out friend.
 
 var indexRouter = require('./routes/index');
