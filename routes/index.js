@@ -4,28 +4,23 @@ const multer = require('multer');
 const sqlConnection = require('../db/index');
 const upload = multer({ dest: 'uploads/' });
 
-// console.log(sqlConnection);
-
-/* GET home page. */
+// Demo Route Write to DB
 router.get('/create', function (req, res, next) {
-  // console.log(req);
-  const newSong = { SongName: 'Hello World' };
-  console.log(newSong);
+  const newSong = { SongName: 'Dayzee Lords' };
 
   sqlConnection(`INSERT INTO Songs SET ?`, newSong, (err, res) => {
     if (err) {
       console.log('error: ', err);
-      // result(err, null);
       return;
     }
 
     console.log('created new song: ', { id: res.insertId, ...newSong });
-    // result(null, { id: res.insertId, ...newSong });
   });
 
-  res.render('index', { title: 'Express' });
+  res.json({ title: 'Write to DB Demo Route' });
 });
 
+// Demo Route File Upload
 router.post('/', upload.single('upload'), function (req, res, next) {
   const fileMeta = JSON.parse(req.body['upload-meta']);
 
