@@ -6,7 +6,7 @@ The plaebak api has access an mySQL db and an AWS Web Bucket. The next task is t
 
 ### Next Steps
 
-1. Store file in AWS Bucket and receive unique identifer and location.
+1. Store file in AWS Bucket and receive unique identifer and location. 11/14/21
 
 2. Add unique identifer and location to file meta data stored in mySQL db.
 
