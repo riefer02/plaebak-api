@@ -5,6 +5,7 @@ const s3 = new AWS.S3();
 const uploadFile = (fileName) => {
   // Read content from the file
   const fileContent = fs.readFileSync(fileName);
+  console.log(fileContent);
 
   //   console.log(fileContent);
 
@@ -27,4 +28,4 @@ const uploadFile = (fileName) => {
   });
 };
 
-uploadFile('../uploads/bong song_rev 1_inst mix.mp3');
+// uploadFile('/uploads/bong song_rev 1_inst mix.mp3');

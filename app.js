@@ -14,7 +14,7 @@ AWS.config.update({ region: 'us-east-2' });
 // Don't burn out friend.
 
 var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
+var audioRouter = require('./routes/audio');
 
 // console.log(indexRouter);
 
@@ -28,6 +28,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/audio', audioRouter);
 
 module.exports = app;
