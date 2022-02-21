@@ -1,15 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const sqlConnection = require('../db/index');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
+const fetchFile = require('../features/fetchFile');
 
-/* GET audio listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with an audio resource');
+router.get('/:file_name', function (req, res, next) {
+  fetchFile(req.params.file_name, res);
 });
 
 router.post('/upload', upload.single('upload-file'), function (req, res, next) {
@@ -45,7 +45,10 @@ router.post('/upload', upload.single('upload-file'), function (req, res, next) {
     });
   });
 
-  res.json({ message: 'post to /audio/', fileMeta });
+  res.json({
+    message: 'Post request to /audio/upload was successful',
+    fileMeta,
+  });
 });
 
 module.exports = router;

@@ -4,7 +4,6 @@ const multer = require('multer');
 const sqlConnection = require('../db/index');
 const upload = multer({ dest: 'uploads/' });
 
-// Demo Route Write to DB
 router.get('/create', function (req, res, next) {
   const newSong = { SongName: 'Dayzee Lords' };
 

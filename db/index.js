@@ -13,7 +13,8 @@ var sqlConnection = function sqlConnection(sql, values, next) {
     values = null;
   }
 
-  var connection = mysql.createConnection(config);
+  const connection = mysql.createConnection(config);
+
   connection.connect(function (err) {
     if (err !== null) {
       console.log('[MYSQL] Error connecting to mysql:' + err + '\n');
