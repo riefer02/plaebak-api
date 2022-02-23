@@ -10,11 +10,12 @@ const fetchFile = (filename, res) => {
     Key: `audio/${filename}.mp3`,
   };
 
-  s3.getObject(getParams, function (err, data) {
+  s3.getSignedUrl('getObject', getParams, function (err, data) {
     if (err) {
       return res.status(400).send({ success: false, err: err });
     } else {
-      return res.send(data.Body);
+      console.log(data);
+      return res.download(data);
     }
   });
 };
