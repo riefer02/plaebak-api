@@ -1,14 +1,16 @@
 const fs = require('fs');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
+const sqlConnection = require('../db/index');
 
-const uploadFile = (fileName) => {
-  const fileContent = fs.readFileSync(fileName);
-  const fileKey = 'audio-demo-two.mp3';
+const uploadFile = (req, res) => {
+  const fileMeta = JSON.parse(req.body['upload-meta']);
+  const audioFile = req.file;
+  const fileContent = fs.readFileSync(audioFile.path);
 
   const params = {
     Bucket: process.env.AWS_BUCKET || 'app-plaebak',
-    Key: `audio/${fileKey}`, // File name you want to save as in S3
+    Key: `audio/${fileMeta.name}`,
     Body: fileContent,
   };
 
@@ -16,7 +18,21 @@ const uploadFile = (fileName) => {
     if (err) {
       throw err;
     }
-    console.log(`File uploaded successfully. ${data.Location}`);
+
+    fileMeta.location = data.Location;
+    fileMeta.key = data.Key;
+
+    sqlConnection(`INSERT INTO Songs SET ?`, fileMeta, (err, res) => {
+      if (err)
+        return res.json({
+          message: 'There was an error with saving your file.',
+        });
+    });
+  });
+
+  res.json({
+    message: 'Post request to /audio/upload was successful',
+    fileMeta,
   });
 };
 
