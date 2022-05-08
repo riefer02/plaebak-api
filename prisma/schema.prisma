@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Songs {
+  id           Int     @id @default(autoincrement()) @db.UnsignedInt
+  name         String? @db.VarChar(255)
+  type         String? @db.VarChar(255)
+  size         Int?
+  lastModified String? @db.VarChar(255)
+  localUrl     String? @db.VarChar(255)
+  location     String? @db.VarChar(255)
+  key          String? @db.VarChar(255)
+}
